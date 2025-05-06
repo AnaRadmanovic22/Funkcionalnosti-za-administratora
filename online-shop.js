@@ -8,15 +8,11 @@ class Item{
     }
 }
 
-let items = [
-    new Item("Majica", 1500, "Majica kratkih rukava od pamuka"),
-    new Item("Patike", 7500, "Sportske patike za trčanje")
-];
-
-createItemRows()
-
+    let items = []
+    
 function createItemRows(){
     let table = document.querySelector("#items-body")
+    table.innerHTML = '';
 
     for(let i=0;i<items.length;i++){
 
@@ -43,6 +39,18 @@ function createItemRows(){
     }
 }
 
+
+function initializeItems() {
+    items = [
+        new Item("Majica", 1500, "Majica kratkih rukava od pamuka"),
+        new Item("Patike", 7500, "Sportske patike za trčanje")];
+  
+    createItemRows()
+    createNewItem()
+  }
+  
+document.addEventListener('DOMContentLoaded', initializeItems)
+
 function displayItemDetails(item){
     let p = document.createElement('p')
     p.innerHTML = `Naziv: ${item.naziv}<br>Cena: ${item.cena}<br>Opis: ${item.opis}`
@@ -53,4 +61,23 @@ function displayItemDetails(item){
     }
 
     details.appendChild(p)
+}
+
+function createNewItem(){
+
+    let submitBtn = document.querySelector('#submitBtn')
+    submitBtn.addEventListener("click", function(){
+        const form = document.querySelector("#new-item-form")
+        const formData = new FormData(form)
+
+        const naziv = formData.get('naziv')
+        const cena = formData.get('cena')
+        const opis = formData.get('opis')
+
+        const newItem = new Item(naziv,cena,opis)
+        items.push(newItem)
+
+        createItemRows()
+        form.reset()
+    })
 }
