@@ -41,10 +41,16 @@ function createItemRows(){
 
 
 function initializeItems() {
+    const savedItems = localStorage.getItem("items");
+
+    if(savedItems){
+        items = JSON.parse(savedItems)
+    }
+    else{   
     items = [
         new Item("Majica", 1500, "Majica kratkih rukava od pamuka"),
         new Item("Patike", 7500, "Sportske patike za trčanje")];
-  
+    }
     createItemRows()
     createNewItem()
   }
@@ -76,6 +82,8 @@ function createNewItem(){
 
         const newItem = new Item(naziv,cena,opis)
         items.push(newItem)
+
+        localStorage.setItem("items",JSON.stringify(items))
 
         createItemRows()
         form.reset()
