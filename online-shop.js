@@ -13,6 +13,7 @@ let items = [
     new Item("Patike", 7500, "Sportske patike za trčanje")
 ];
 
+createItemRows()
 
 function createItemRows(){
     let table = document.querySelector("#items-body")
@@ -20,6 +21,10 @@ function createItemRows(){
     for(let i=0;i<items.length;i++){
 
         let tr = document.createElement("tr")
+
+        tr.addEventListener('click', function(){
+            displayItemDetails(items[i])
+        })
 
         let rb = document.createElement("td")
         let naziv = document.createElement("td")
@@ -36,4 +41,16 @@ function createItemRows(){
         table.appendChild(tr)
         
     }
+}
+
+function displayItemDetails(item){
+    let p = document.createElement('p')
+    p.innerHTML = `Naziv: ${item.naziv}<br>Cena: ${item.cena}<br>Opis: ${item.opis}`
+    let details = document.querySelector('#itemDetails')
+
+    if(details.firstChild){
+        details.firstChild.remove()
+    }
+
+    details.appendChild(p)
 }
